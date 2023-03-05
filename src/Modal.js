@@ -227,7 +227,7 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
             return (<tr>
                 <td>
                     <div className="form-check form-check-inline" >
-                        <input className="form-check-input"  type="checkbox" value="option1" onChange={(e)=>updatedlist(e,val.id)} />
+                        <input className="form-check-input"  type="checkbox" value="option1" checked={false} onChange={(e)=>updatedlist(e,val.id)} />
 
                     </div>
                     {count = count + 1}
