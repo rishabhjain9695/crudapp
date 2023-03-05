@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal';
 export default function Modals() {
+    const[searchs,setSearch]=useState(false);
     const [show, setShow] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -61,6 +62,7 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
         setShow(false);
     }
    const search=(e)=>{
+   
     let event=e.target.value;
     const newData = arr.filter(val => val.firstName.toLowerCase().includes(event.toLowerCase()) ||
     val.lastName.toLowerCase().includes(event.toLowerCase()) ||
@@ -70,9 +72,11 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
     val.gender.toLowerCase().includes(event.toLowerCase())
   );
   if(e.target.value.length>0){
+    setSearch(true);
     setList(newData);
     }
     else{
+        setSearch(false);
       setList(arr);
     }
    }
@@ -545,7 +549,7 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
                     </tr>
                 </thead>
                 <tbody>
-               { list.length?(list.map((val) => {
+               { (!searchs ?( list.length?(list.map((val) => {
             return (<tr> 
                 <td>
                     <div className="form-check form-check-inline" >
@@ -562,7 +566,7 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
                 <td>{val.superHeroName}</td>
                 <td>{val.age}</td>
             </tr>);
-        }))  : (  <tr><td>Empty list"</td></tr>) }
+        }))  : (  <tr><td>Empty list"</td></tr>)): (  <tr><td>no search items list"</td></tr>)) }
                 </tbody>
             </table>
         </div>
