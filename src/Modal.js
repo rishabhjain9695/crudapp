@@ -34,6 +34,7 @@ export default function Modals() {
     
 
 useEffect(()=>{
+    setList(arr);
     if(!cond){
         localStorage.setItem("lists",JSON.stringify(arr));
 
@@ -43,6 +44,7 @@ useEffect(()=>{
     }
   
 },[arr])
+const[details,searchDetails]=useState([]);
 const [cndFN, setCndFN] = useState(true);
 const [cndLN, setCndLN] = useState(true);
 const [cndSN, setCndSN] = useState(true);
@@ -58,7 +60,23 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
     const handleClose = () => {
         setShow(false);
     }
-   
+   const search=(e)=>{
+    let event=e.target.value;
+    const newData = arr.filter(val => val.firstName.toLowerCase().includes(event.toLowerCase()) ||
+    val.lastName.toLowerCase().includes(event.toLowerCase()) ||
+    val.superHeroName.toLowerCase().includes(event.toLowerCase()) ||
+    val.age.toLowerCase().includes(event.toLowerCase()) ||
+    val.email.toLowerCase().includes(event.toLowerCase()) ||
+    val.gender.toLowerCase().includes(event.toLowerCase())
+  );
+  if(e.target.value.length>0){
+    setList(newData);
+    }
+    else if(e.target.value.length==0){
+      setList(arr);
+    }
+ 
+   }
     const handleSubmit = (e) => {
         e.preventDefault()
         if(Emailerror) {
@@ -126,12 +144,13 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
     
     if(ele.target.checked){
         update=[...update,ind2];
-        console.log("ok");
+        console.log("ok",update);
     }
     else {
         update=update.filter((e)=>{
             return e!=ind2;
         })
+        console.log(update,"sal");
         console.log("nooooooooo")
     }
     
@@ -201,6 +220,28 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
             setEmailerror(false);
         }
     }
+    const searching=()=>{
+        details.length>0   ? (
+            details.map((val)=>{
+            return (<tr>
+                <td>
+                    <div className="form-check form-check-inline" >
+                        <input className="form-check-input"  type="checkbox" value="option1" onChange={(e)=>updatedlist(e,val.id)} />
+
+                    </div>
+                    {count = count + 1}
+                </td>
+               
+                <td>{val.firstName}</td>
+                <td>{val.lastName}</td>
+                <td>{val.email}</td>
+                <td>{val.gender}</td>
+                <td>{val.superHeroName}</td>
+                <td>{val.age}</td>
+            </tr>);
+            })): ( <h1>"no  found "</h1>)
+    }
+   
     const showw = () => {
         setShow(true);
     }
@@ -297,7 +338,7 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
               <nav className="navbar navbar-light bg-light">
               <div class="input-group">
   <div class="form-outline">
-    <input type="search" id="form1"  class="form-control" />
+    <input type="search" id="form1"  class="form-control" onChange={search} />
     <label class="form-label" for="form1">Search</label>
   </div>
   <button type="button" class="btn">
@@ -505,26 +546,24 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
                     </tr>
                 </thead>
                 <tbody>
+               { list.length?(list.map((val) => {
+            return (<tr> 
+                <td>
+                    <div className="form-check form-check-inline" >
+                        <input className="form-check-input"  type="checkbox" value="option1" onChange={(e)=>updatedlist(e,val.id)} />
 
-                    {arr.length?arr.map((val) => {
-                        return (<tr>
-                            <td>
-                                <div className="form-check form-check-inline" >
-                                    <input className="form-check-input"  type="checkbox" value="option1" onChange={(e)=>updatedlist(e,val.id)} />
-
-                                </div>
-                                {count = count + 1}
-                            </td>
-                           
-                            <td>{val.firstName}</td>
-                            <td>{val.lastName}</td>
-                            <td>{val.email}</td>
-                            <td>{val.gender}</td>
-                            <td>{val.superHeroName}</td>
-                            <td>{val.age}</td>
-                        </tr>);
-                    }): <div><h1>Empty list not items</h1></div>}
- 
+                    </div>
+                    {count = count + 1}
+                </td>
+               
+                <td>{val.firstName}</td>
+                <td>{val.lastName}</td>
+                <td>{val.email}</td>
+                <td>{val.gender}</td>
+                <td>{val.superHeroName}</td>
+                <td>{val.age}</td>
+            </tr>);
+        }))  : (  <div><h1>Empty list not items</h1></div>) }
                 </tbody>
             </table>
         </div>
