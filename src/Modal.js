@@ -1,4 +1,5 @@
 
+//////////rishabh is a goof ffffff
 
 
 import React, { useState, useEffect } from 'react'
@@ -569,3 +570,4 @@ const sortList=(list)=>{!cndFN? setList(list): setCndFN(false);};
         </div>
     )
 }
+// rishabh
